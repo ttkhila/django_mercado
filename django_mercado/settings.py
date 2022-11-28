@@ -71,7 +71,7 @@ DATABASES = {
         'PASSWORD': 'xxxxxxxxx',
         'HOST': 'localhost',
         'OPTIONS': {
-            'sql_mode': 'traditional',
+            'sql_mode': 'traditional', 
         }
     }
 }
