@@ -14,7 +14,7 @@ SECRET_KEY = 'django-insecure-rp%hf*1g5)hzpekv0m9f8hy0ate^b&dtc&0kbdv^_j8=72wikl
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.15.13', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -67,8 +67,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mercado_django',
-        'USER': 'ttkhila',
-        'PASSWORD': 'Roch@bom123',
+        'USER': 'xxxxxxxx',
+        'PASSWORD': 'xxxxxxxxx',
         'HOST': 'localhost',
         'OPTIONS': {
             'sql_mode': 'traditional',
