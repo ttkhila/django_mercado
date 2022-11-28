@@ -64,14 +64,14 @@ WSGI_APPLICATION = 'django_mercado.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mercado_django',
-        'USER': 'xxxxxxxx',
-        'PASSWORD': 'xxxxxxxxx',
+        'USER': 'ttkhila',
+        'PASSWORD': 'Roch@bom123',
         'HOST': 'localhost',
         'OPTIONS': {
-            'sql_mode': 'traditional', 
+            'sql_mode': 'traditional',
         }
     }
 }
