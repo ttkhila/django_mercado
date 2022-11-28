@@ -67,8 +67,8 @@ DATABASES = {
      'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'mercado_django',
-        'USER': 'ttkhila',
-        'PASSWORD': 'Roch@bom123',
+        'USER': 'xxxxxxx',
+        'PASSWORD': 'xxxxxxxx',
         'HOST': 'localhost',
         'OPTIONS': {
             'sql_mode': 'traditional',
