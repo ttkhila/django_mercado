@@ -47,12 +47,15 @@ class ListaCompra(models.Model):
 
 class ProdutoLista(models.Model):
     # produto_marca = models.ForeignKey(ProdutoMarca, null=False, on_delete=models.SET_DEFAULT, default=0)
-    produto = models.ForeignKey(Produto, null=False, on_delete=models.SET_DEFAULT, default=0) #pk1
+    produto = models.ForeignKey(Produto, null=False, on_delete=models.SET_DEFAULT, default=None) #pk1
     lista_compra = models.ForeignKey(ListaCompra, null=False, on_delete=models.CASCADE) #pk2
-    marca = models.ForeignKey(Marca, null=True, blank=True, on_delete=models.SET_NULL) #pk3
-    mercado = models.ForeignKey(Mercado, null=False, on_delete=models.SET_DEFAULT, default=0) #pk4
-    preco = models.DecimalField(decimal_places=2, max_digits=8, null=True)
-    indicado = models.BooleanField(default=False) #quando o preco eh o indicado na lista
+    marca = models.ForeignKey(Marca, null=True, blank=True, on_delete=models.SET_NULL) 
+    mercado = models.ForeignKey(Mercado, null=True, blank=True, on_delete=models.SET_DEFAULT, default=None) #pk3
+    preco = models.DecimalField(decimal_places=2, max_digits=8, null=True, default=0.00)
+    indicado = models.BooleanField(default=False) #quando o preco eh o indicado na lista    
     data_lancamento = models.DateTimeField(auto_now=True)
     def __str__(self):
         return f"{str(self.lista_compra)} ({str(self.produto)})"
+
+    class Meta:
+        ordering = ('produto',)

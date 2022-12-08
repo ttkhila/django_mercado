@@ -1,0 +1,44 @@
+.btn-secondary.active{
+    background-color:#198754 !important;
+}
+
+table {
+    table-layout: fixed;
+    word-wrap: break-word;
+} 
+
+#th-first-column-list{
+    min-width: 120px !important;
+    background-color: var(--yellow-light);
+} 
+
+.table-responsive th {
+    min-width: 80px;
+}
+
+.table-list{
+    border: solid 1px rgb(201, 164, 84);
+    background-color: rgb(233, 233, 233);
+}
+.table-first-row{
+    background-color: rgb(249, 249, 202);
+}
+.table-first-cell{
+    background-color: rgb(240, 240, 148) !important;
+}
+.table-first-col{
+    background-color: rgb(242, 229, 176) !important;
+}
+.table-list tr td{
+    padding: 4px;
+} 
+input[name="input-preco"]{
+    text-align: center;
+    background-color: rgb(211, 236, 255);
+}
+
+select[name='select-brand']{
+    font-size: x-small;
+    background-color: rgb(209, 232, 235);
+    font-weight: bold;
+}

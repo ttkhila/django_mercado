@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %} 
+<link rel="stylesheet" href="{% static 'css/mercado/mercado.css' %}">
+{% endblock %}
+
+{% block 'title' %} Lista {% endblock %}
+
+{% block 'body' %} <!-- BODY - INICIO -->
+    <!-- {% if session_id %} <input type="hidden" id="input_session" value="{{session_id}}"></script> {% endif %} -->
+    <input type="hidden" name="" id="hidden-id-list" value="{{ id_list }}">
+    <div class="table-responsive mt-2">
+        <table class="table table-sm table-hover table-bordered w-auto mw-100 table-list">
+            <thead>
+                <tr class="table-first-row">
+                    <th class="table-first-cell" scope="col" id="th-first-column-list">
+                        Mercados <i class="fa-solid fa-caret-right"></i>
+                        <hr class="m-0">
+                        Produtos <i class="fa-solid fa-caret-down"></i>
+                    </th>
+                    <!-- List load -->
+                    {% for market in markets %} 
+                        <th scope="col" id="th-market_{{forloop.counter}}">
+                            <span class="text-center text-dark w-100">{{ market.nome }}</span>
+                        </th>
+                    {% endfor %}
+                    
+                    <!-- List create -->
+                    <th scope="col" id="th-market_{{markets|length|add:'1'}}">
+                        <div class="input-group">
+                            <select name="select-market" id="select-market" class="form-select form-select-sm" aria-label=".form-select-sm">
+                                <option value="0">Escolha o Mercado</option>
+                                {% for one_market in all_markets %}
+                                {% if not one_market in markets %}
+                                <option value="{{one_market.id}}">{{one_market.nome}}</option>
+                                {% endif %}
+                                {% endfor %}
+                            </select>
+                            <span class="visually-hidden text-center text-secondary w-100"></span>
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in items.items %} 
+                <tr class="align-bottom">
+                    <th class="table-first-col" scope="row">
+                        <div class="fs-6">{{ key.nome }}</div>
+                    </th>
+                    {% for k, v in value.items %}
+                    <!-- v.0 = marca; v.1 = preco; v.2 = produto lista id -->
+                    <td id="tdPrecoProduto_{{v.2}}" {% if v.2 in minor_prices %} class="bg-success align-middle" {% endif %}>  <!-- marca menores precos -->                                                                       
+                        <input type="text" name="input-preco" class="form-control form-control-sm" id="inputPrecoProduto_{{v.2}}" value="{{ v.1|floatformat:'2' }}">
+                        <select name="select-brand" id="brand_{{v.2}}" class="form-control form-select-sm">
+                            <option value="0">Marca</option>
+                            {% for brand in brands %}
+                                {% if brand.id == v.0 %}
+                                    <option value="{{brand.id}}" selected>{{brand.nome}}</option>
+                                {% else %}
+                                    <option value="{{brand.id}}">{{brand.nome}}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
+                    </td>
+                    {% endfor %}
+                    <td>
+                        <input type="number" class="form-control form-control-sm" id="inputPrecoProduto_0">
+                        <select name="nonenonenoe" id="brand_0" class="form-select form-select-sm" aria-label=".form-select-sm">
+                            <option value="0">N/A</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+
+    <!-- MODAL INSERIR PRODUTO LISTA -->
+    <div class="modal fade" id="modal_product" tabindex="-1" aria-labelledby="modal_productLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_productLabel">Selecione o(s) produto(s)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-product-list" method="POST">
+                        <div class="mb-3">
+
+                            <div class="overflow-scroll mh-100 rounded-2 border border-2 bg-light p-2" id="div-items-list" style="width: 100%;">
+                                <!-- {% for prod in produto_list %} -->
+                                <!-- <span class="badge rounded-pill bg-success">{{ prod.nome }}</span> -->
+                                <button type="button" name="prod_item" id="prod_{{ prod.id }}" class="btn btn-secondary rounded-pill btn-sm m-1 shadow" 
+                                    data-toggle="button" aria-pressed="false" autocomplete="off">
+                                    <!-- {{ prod.nome }} -->
+                                </button>
+                                <!-- {% endfor %} -->
+                            </div>
+                            
+                        </div>
+                        <div id="alert_error" class="alert alert-danger alert-dismissible fade show p-2 " role="alert" style="display: none">
+                            <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+                            <span></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" onclick="form_new_product_list()" class="btn btn-primary">Inserir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL NOVA MARCA -->
+    <div class="modal fade" id="modal_brand" tabindex="-1" aria-labelledby="modal_brandLabel" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal_brandLabel">Nova Marca</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-new-brand" method="POST">
+                        <div class="mb-3">
+                            <label for="brand-name" class="col-form-label">Nome:</label>
+                            <input type="text" class="form-control" id="brand-name" autofocus>
+                        </div>
+                        <div id="alert_error" class="alert alert-danger alert-dismissible fade show p-2 " role="alert" style="display: none">
+                            <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+                            <span></span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" onclick="form_new_brand()" class="btn btn-primary">Cadastrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}<!-- BODY - FIM -->
+
+{% block 'other_loads' %} 
+<script src="{% static 'js/mercado/mercado.js' %}"></script>
+{% endblock %}

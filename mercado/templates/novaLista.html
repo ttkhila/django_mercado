@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'head' %} 
+<link rel="stylesheet" href="{% static 'css/mercado/mercado.css' %}">
+{% endblock %}
+
+{% block 'title' %} Nova Lista {% endblock %}
+
+{% block 'body' %} 
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="mb-3">{% csrf_token %}
+            <label for="listName" class="form-label mb-0">Nome da Lista</label>
+            <input type="text" placeholder="Lista de compras Janeiro 2023" class="form-control" id="listName">
+            <div id="alert_nome" class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="display: none">
+                <i class="fa-solid fa-triangle-exclamation text-danger"></i>
+                <strong>Prencha o nome da lista!</strong>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="overflow-scroll mh-100 rounded-2 border border-2 bg-light p-2" id="div-items-list" style="width: 100%;">
+            {% for prod in produto_list %}
+            <!-- <span class="badge rounded-pill bg-success">{{ prod.nome }}</span> -->
+            <button type="button" name="prod_item" id="prod_{{ prod.id }}" class="btn btn-xs btn-secondary rounded-pill m-1 shadow" 
+                data-toggle="button" aria-pressed="false" autocomplete="off">
+                {{ prod.nome }}
+            </button>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="col-sm-12">
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary mt-2" id="btn_create_list">Criar</button>
+        </div>
+    </div>
+    <div id="alert_create" class="alert alert-dismissible fade show p-2" role="alert" style="display: none">
+        <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+        <span></span>
+    </div>
+</div>
+
+
+{% endblock %}
+
+{% block 'other_loads' %} 
+<script src="{% static 'js/mercado/mercado.js' %}"></script>
+{% endblock %}

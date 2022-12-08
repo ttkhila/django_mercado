@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'title' %} Listas de Compras {% endblock %}
+
+{% block 'body' %} 
+
+
+<div class="row">
+    <div class="col-sm-12">
+
+        <div class="card mt-4">
+            <div class="card-header text-dark bg-warning text-center">Minhas Listas de Compras</div>
+            <img class="card-img-top" src="{% static 'img/banner_mercado.jpg' %}" />
+
+            <div class="card-body">
+                <div class="d-grid gap-2 m-2">
+                    <a href="{% url 'novaLista' %}" type="button" class="btn btn-primary">Criar nova lista +</a> 
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header bg-success text-white text-center">Listas abertas</div>
+            <ul class="list-group">
+                {% for id, item in open.items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'showList' id %}" class="card-link">{{item.0}}</a>
+                    <span class="badge bg-primary rounded-pill">Itens: {{item.1}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="card mt-4 mb-4">
+            <div class="card-header bg-danger text-white text-center">Listas fechadas</div>
+            <ul class="list-group">
+                {% for id, item in closed.items %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                <a href="{% url 'showList' id %}" class="card-link">{{item.0}}</a>
+                    <span class="badge bg-primary rounded-pill">Itens: {{item.1}}</span>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}
