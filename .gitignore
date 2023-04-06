@@ -1,3 +1,6 @@
 django_mercado/settings.py
 .gitignore
 **/settings*
+ssh_public_key
+private_key_ssh.ppk
+.gitignore

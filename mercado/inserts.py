@@ -373,11 +373,6 @@ def inserts():
 12
 ]
 
-    for i in range(0, len(produtos)):
-        print(f'PRODS: {produtos[i]} | UNIS: {unidades_id[i]} | CATS: {categorias_id[i]}')
-        produto = Produto(nome=produtos[i], unidade=Unidade.objects.get(id=unidades_id[i]), categoria=Categoria.objects.get(id=categorias_id[i]))
-        produto.save()
-
     for m in mercados:
         print(f'Mercado: {m}')
         mercado = Mercado(nome = m)
@@ -400,6 +395,11 @@ def inserts():
         print(f'Marca: {m}')
         marca = Marca(nome = m)
         marca.save()
+
+    for i in range(0, len(produtos)):
+        print(f'PRODS: {produtos[i]} | UNIS: {unidades_id[i]} | CATS: {categorias_id[i]}')
+        produto = Produto(nome=produtos[i], unidade=Unidade.objects.get(id=unidades_id[i]), categoria=Categoria.objects.get(id=categorias_id[i]))
+        produto.save()
 
     
 

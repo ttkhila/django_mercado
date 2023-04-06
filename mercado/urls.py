@@ -14,5 +14,5 @@ urlpatterns = [
     path('insertProductsList', views.insert_products_in_list, name='insertProductsList'),
 
     # initial data insert
-    # path('initialInsertDb', views.initialInserts, name='initialInsertDb'),
+    #path('initialInsertDb', views.initialInserts, name='initialInsertDb'),
 ] 
