@@ -1,0 +1,1 @@
+web: gunicorn django_mercado.wsgi --log-file -
