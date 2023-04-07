@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse, JsonResponse
 from .models import Produto, ListaCompra, ProdutoLista, Mercado, Marca
@@ -7,6 +7,42 @@ from django.db.models import Q
 from .util import *
 from .inserts import inserts #initial inserts DB
 
+#Authenticate
+from .models import LoginForm
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages, auth
+
+def login(request):
+    form = LoginForm()
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth.login(request, user)
+                messages.success(request, f'{username} logado com sucesso!')
+                return redirect('mercado')
+            else:
+                print('failure!')
+                messages.error(request, 'Erro ao efetuar login')
+                return redirect('login')
+        else:
+            print(f'ERROS: {form.errors}')
+            redirect('login')
+            #return render(request, 'login.html', {'erro': 'Credenciais inválidas!'})
+
+    return render(request, 'login.html', {'form': form})
+
+def logout(request):
+    auth.logout(request)
+    messages.success(request, 'Logout efetuado com sucesso!')
+    return redirect('login')
+
+
+@login_required
 def mercado_index(request):
     open_lists = ListaCompra.objects.filter(Q(finalizada=False))
     closed_lists = ListaCompra.objects.filter(Q(finalizada=True))
@@ -22,6 +58,7 @@ def mercado_index(request):
         result_closed[_list.id] = [_list.nome, distinct]
     return render(request, 'index.html', { 'open': result_open, 'closed': result_closed } )
 
+@login_required
 def nova_lista(request):
     produtos = Produto.objects.all().order_by('nome')
     context = {'produto_list': produtos}
@@ -113,7 +150,7 @@ def insert_products_in_list(request):
         
     return JsonResponse({'a': 'success'})
 
-
+@login_required
 def show_list(request, id):
     _list = ProdutoLista.objects.filter(Q(lista_compra=id)).order_by('produto__nome')
 

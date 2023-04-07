@@ -1,4 +1,5 @@
 from django.db import models
+from django import forms
 
 class Mercado(models.Model):
     nome = models.CharField(max_length=50, null=False)
@@ -59,3 +60,15 @@ class ProdutoLista(models.Model):
 
     class Meta:
         ordering = ('produto',)
+
+
+#AUTHENTICATE SYSTEM
+class LoginForm(forms.Form):
+    username = forms.CharField(label='Usuário', required=True, max_length=12, widget=forms.TextInput(attrs={'placeholder': 'Usuário', 'class': 'form-control'}))
+    password = forms.CharField(label='Senha', required=True, max_length=8, widget=forms.PasswordInput(attrs={'placeholder': '********', 'class': 'form-control'}))
+
+    def clean_username(self):
+        username = self.cleaned_data['username']
+        if len(username) < 4:
+            raise forms.ValidationError('O Usuário deve ter pelo menos 4 dígitos.')
+        return username

@@ -37,6 +37,13 @@
                     </li>
                 </ul>
             </div>
+            <div class="flex-d text-white">
+                {% if user.is_authenticated %}
+                    <p>Bem-vinda, {{ user.username }}! Boas compras!<br /><a href="{% url 'logout' %}">Sair</a></p>
+                {% else %}
+                    <p>Bem-vindo(a), novo usuário! Faça, <a href="{% url 'login' %}">login</a></p>
+                {% endif %}
+            </div>
         </div>
     </nav>
 

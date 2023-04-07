@@ -12,6 +12,8 @@ urlpatterns = [
     path('newBrand', views.new_brand_created, name='newBrand'),
     path('newProductInList', views.new_product_list, name='newProductInList'),
     path('insertProductsList', views.insert_products_in_list, name='insertProductsList'),
+    path('login', views.login, name='login'),
+    path('logout', views.logout, name='logout'),
 
     # initial data insert
     #path('initialInsertDb', views.initialInserts, name='initialInsertDb'),
