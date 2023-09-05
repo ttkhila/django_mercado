@@ -44,15 +44,22 @@
             </thead>
             <tbody>
                 {% for key, value in items.items %} 
-                <tr class="align-bottom">
-                    <th class="table-first-col" scope="row">
-                        <div class="fs-6">{{ key.nome }}</div>
+                <tr class="align-bottom {% if value.2.3 %}border border-2 border-secondary{% endif %}">
+                    <th class="{% if not value.2.3 %}table-first-col{% endif %}" scope="row">
+                        <button class="btn btn-sm btn-warning border border-dark" onclick="marcar_vendido('{{id_list}}', '{{key.id}}')">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
+                        <div class="fs-6">
+                            {{ key.nome }}
+                        </div>
                     </th>
                     {% for k, v in value.items %}
-                    <!-- v.0 = marca; v.1 = preco; v.2 = produto lista id -->
-                    <td id="tdPrecoProduto_{{v.2}}" {% if v.2 in minor_prices %} class="bg-success align-middle" {% endif %}>  <!-- marca menores precos -->                                                                       
-                        <input type="text" name="input-preco" class="form-control form-control-sm" id="inputPrecoProduto_{{v.2}}" value="{{ v.1|floatformat:'2' }}">
-                        <select name="select-brand" id="brand_{{v.2}}" class="form-control form-select-sm">
+                    <!-- v.0 = marca; v.1 = preco; v.2 = produto lista id; v.3 = vendido (indicado) -->
+                    <td id="tdPrecoProduto_{{v.2}}" {% if value.2.3 %}class="bg-light align-middle"{% else %}{% if v.2 in minor_prices %}class="bg-success align-middle"{% endif %}{% endif %}>  <!-- marca menores precos ou campo desabilitado em caso de vendido -->                                                                       
+                        <input type="text" name="input-preco" class="form-control form-control-sm {% if value.2.3 %}input-disabled{% endif %}" id="inputPrecoProduto_{{v.2}}" 
+                            value="{{ v.1|floatformat:'2' }}" {% if value.2.3 %}disabled{% endif %}>
+                       
+                        <select name="select-brand" id="brand_{{v.2}}" class="form-control form-select-sm {% if value.2.3 %}input-disabled{% endif %}" {% if value.2.3 %}disabled{% endif %}>
                             <option value="0">Marca</option>
                             {% for brand in brands %}
                                 {% if brand.id == v.0 %}
@@ -128,7 +135,7 @@
                             <label for="brand-name" class="col-form-label">Nome:</label>
                             <input type="text" class="form-control" id="brand-name" autofocus>
                         </div>
-                        <div id="alert_error" class="alert alert-danger alert-dismissible fade show p-2 " role="alert" style="display: none">
+                        <div id="alert_error" class="alert alert-danger alert-dismissible fade show p-2" role="alert" style="display: none">
                             <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
                             <span></span>
                         </div>

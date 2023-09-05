@@ -16,7 +16,7 @@ def price_compare(item_list):
                 result['minor_price'] = item['preco']
                 result['item_id'] = item['id']
 
-    print(all_itens)
+    # print(all_itens)
     return result
 
 def price_compare_load_list(items: dict): 
@@ -36,5 +36,5 @@ def price_compare_load_list(items: dict):
         minor_price = 99999.00
         item_id = 0
 
-    print(result)
+    # print(result)
     return result

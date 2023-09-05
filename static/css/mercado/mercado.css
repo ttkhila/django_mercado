@@ -29,9 +29,16 @@ table {
 .table-first-col{
     background-color: rgb(242, 229, 176) !important;
 }
+.table-first-col-disabled{
+    background-color: rgb(167, 167, 167) !important;
+}
 .table-list tr td{
     padding: 4px;
 } 
+.input-disabled {
+    background-color: rgb(206, 206, 206) !important;
+    border-color: rgb(85, 85, 85);
+}
 input[name="input-preco"]{
     text-align: center;
     background-color: rgb(211, 236, 255);

@@ -171,6 +171,7 @@ def show_list(request, id):
             items[l.produto][l.mercado.id].append(marca_id)
             items[l.produto][l.mercado.id].append(l.preco)
             items[l.produto][l.mercado.id].append(l.id)
+            items[l.produto][l.mercado.id].append(l.indicado)
 
             if not l.mercado in markets:
                 markets.append(l.mercado)
@@ -278,3 +279,14 @@ def new_brand_created(request):
 def initialInserts(request):
     inserts()
     return HttpResponse('<h1>sucesso</h1>')
+
+def produto_vendido(request):
+    id = request.GET.get('id')
+    result = {}
+    try: item = ProdutoLista.objects.get(Q(id=id)) 
+    except ObjectDoesNotExist:
+        result['msg'] = 'Erro ao recuperar o produto na lista!'
+        return JsonResponse(result)
+    item.indicado = not item.indicado
+    item.save()
+    return JsonResponse({})

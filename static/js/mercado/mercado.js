@@ -248,3 +248,17 @@ function form_new_product_list(){
         }
     }).catch( e => console.log('Error: ' + e.message))
 }
+
+function marcar_vendido(produto_list_id){
+    url = `/mercado/produtoVendido?id=${produto_list_id}`
+    fetch(url)
+        .then(result => {return result.json()})
+        .then(data => {
+            console.log(data)
+            if (data['msg']) console.error(data['msg'])
+            else {
+                window.location.reload()
+            }
+        })
+        .catch( e => console.log('Error: ' + e.message))
+}

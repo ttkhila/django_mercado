@@ -15,7 +15,7 @@ urlpatterns = [
     path('insertProductsList', views.insert_products_in_list, name='insertProductsList'),
     path('login', views.login, name='login'),
     path('logout', views.logout, name='logout'),
-
+    path('produtoVendido', views.produto_vendido, name='produtoVendido'),
     # initial data insert
     #path('initialInsertDb', views.initialInserts, name='initialInsertDb'),
 ] 
